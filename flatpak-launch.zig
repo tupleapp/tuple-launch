@@ -282,9 +282,9 @@ fn sendFd(sock: os.socket_t, msg: []const u8, fd: os.fd_t) void {
         sendMsgFmt(sock, "error sendmsg failed with {s}", .{@errorName(err)});
         return;
     };
-    if (len != 2) {
+    if (len != msg.len) {
         // we don't have much choice but to exit here
-        log.err(@src(), "expected sendmsg to return 2 but got {}", .{len});
+        log.err(@src(), "expected sendmsg to return {} but got {}", .{msg.len, len});
         os.exit(0xff);
     }
 }
