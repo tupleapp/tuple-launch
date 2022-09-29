@@ -233,11 +233,6 @@ pub fn main() !void {
     os.exit(0xff);
 }
 
-const launch_suffix = switch (build_options.variant) {
-    .dev => "-dev",
-    .customer => "",
-};
-
 pub fn getTupleFlatpakLaunchExe(
     flatpak_id: []const u8,
     flatpak_install_kind: FlatpakInstallKind,
@@ -292,11 +287,11 @@ pub fn getTupleFlatpakLaunchExe(
     }
     const location = std.mem.trimRight(u8, result.stdout, "\n\r ");
     log.debug(@src(), "flatpak location is '{s}'", .{location});
-    return try std.fmt.allocPrintZ(global_arena.allocator(), "{s}/files/bin/tuple-flatpak-launch" ++ launch_suffix, .{location});
+    return try std.fmt.allocPrintZ(global_arena.allocator(), "{s}/files/bin/tuple-flatpak-launch", .{location});
 }
 
 const tuple_dev_ed25519_pub = blk: {
-    const pub_hex = @embedFile("tuple_dev_ed25519.pub");
+    const pub_hex = @embedFile(build_options.pubkey_filepath);
     var buf: [Signer.public_length]u8 = undefined;
     const len = (std.fmt.hexToBytes(&buf, pub_hex) catch @panic("pub keyfile contained non-hex digits")).len;
     std.debug.assert(len == buf.len);

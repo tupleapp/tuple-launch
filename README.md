@@ -1,3 +1,17 @@
+Tuple Launch
+================================================================================
+Use the following link to download the toolchain for this project:
+
+https://ziglang.org/builds/zig-linux-x86_64-0.10.0-dev.2674+d980c6a38.tar.xz
+
+Download/extract the archve and run `zig build` with the resulting `zig` executable.
+
+This will generate executables in the `zig-out` directory which will include:
+
+* the `signing` executable for generating new keys/signing and verifying signatures.
+* the `tuple-launch` and `tuple-flatpak-launch` executables which are used by Tuple
+  uses during its launch process.
+
 Tuple Launch Process
 ================================================================================
 Tuple requires privileged access that the flatpak portal doesn't provide.  To
